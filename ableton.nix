@@ -51,7 +51,9 @@ in mkWindowsApp rec {
   # But note that you must ommit $WINEPREFIX from the path.
   # To figure out what needs to be persisted, take at look at $(dirname $WINEPREFIX)/upper,
   # while the app is running. config and cache
-  fileMap = { };
+  fileMap = { 
+    "$HOME/.config/Ableton" = "drive_c/users/$USER/AppData/Roaming/Ableton"
+  };
 
   # By default, `fileMap` is applied right before running the app and is cleaned up after the app terminates. If the following option is set to "true", then `fileMap` is also applied prior to `winAppInstall`. This is set to "false" by default.
   fileMapDuringAppInstall = false;
@@ -135,7 +137,7 @@ in mkWindowsApp rec {
 
       name = pname;
       exec = pname;
-      icon = pname;
+      src = ./ableton-256.png;
       desktopName = "Ableton Live 11 Lite";
       genericName = "Music Production Software";
       categories = ["Audio" "Midi" "Sequencer" "Music" "AudioVideo" ];
@@ -143,7 +145,7 @@ in mkWindowsApp rec {
   ];
 
   desktopIcon = makeDesktopIcon {
-    name = "ableton";
+    name = "Ableton Live 11 Lite";
 
     src = ./ableton-256.png;
   };
