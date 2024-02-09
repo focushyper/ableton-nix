@@ -1,4 +1,4 @@
-# AbletonLive-nix
+# ableton-nix
 
 Ableton Live 11 Lite as a nix package using wine.
 
