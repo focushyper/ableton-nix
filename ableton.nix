@@ -19,11 +19,11 @@ in mkWindowsApp rec {
   inherit wine;
 
   pname = "ableton";
-  version = "11.2.6";
+  version = "11.3.21";
 
-  src = fetchurl {
+  src = builtins.fetchurl {  # use builtins for nice download progress
     url = "https://cdn-downloads.ableton.com/channels/${version}/ableton_live_lite_${version}_64.zip";
-    sha256 = "sha256-eFgVeMdFRksjq5b+e4k+5o7gbLLQWcD5KgWr6dCbEbo=";
+    sha256 = "1hlfxg67zlcblvfy41yw3m5v518fv1a8v2ghf2wf7xy5iysxp8j7";
   };
 
   # In most cases, you'll either be using an .exe or .zip as the src.
@@ -56,17 +56,17 @@ in mkWindowsApp rec {
   };
 
   # By default, `fileMap` is applied right before running the app and is cleaned up after the app terminates. If the following option is set to "true", then `fileMap` is also applied prior to `winAppInstall`. This is set to "false" by default.
-  fileMapDuringAppInstall = false;
+  fileMapDuringAppInstall = true;
 
   # By default `mkWindowsApp` doesn't persist registry changes made during runtime. Therefore, if an app uses the registry then set this to "true". The registry files are saved to `$HOME/.local/share/mkWindowsApp/$pname/`.
-  persistRegistry = false;
+  persistRegistry = true;
 
   # By default mkWindowsApp creates ephemeral (temporary) WINEPREFIX(es). 
   # Setting persistRuntimeLayer to true causes mkWindowsApp to retain the WINEPREFIX, for the short term. 
   # This option is designed for apps which can't have their automatic updates disabled.
   # It allows package maintainers to not have to constantly update their mkWindowsApp packages.
   # It is NOT meant for long-term persistance; If the Windows or App layers change, the Runtime layer will be discarded.
-  persistRuntimeLayer = false;
+  persistRuntimeLayer = true;
 
   # The method used to calculate the input hashes for the layers.
   # This should be set to "store-path", which is the strictest and most reproduceable method. But it results in many rebuilds of the layers since the slightest change to the package inputs will change the input hashes.
