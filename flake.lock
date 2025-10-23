@@ -1,76 +1,40 @@
 {
   "nodes": {
-    "erosanix": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "nixpkgs": "nixpkgs"
-      },
+    "flake-utils": {
       "locked": {
-        "lastModified": 1707271053,
-        "narHash": "sha256-q6dwfJYWI7BcS5a6YVUbx346i9EmRB1BwRpcOMwoF3k=",
-        "owner": "emmanuelrosa",
-        "repo": "erosanix",
-        "rev": "72fc398838446ac66d67639e22c401137aa43d9e",
+        "lastModified": 1727371110,
+        "narHash": "sha256-RN7B7Vr7QXGsz+NqC+H2d4Z7KWeA4bnSwsxxED6V0HQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3b795c4424356a7b80126e384cb3fba6a2d8f6a1",
         "type": "github"
       },
       "original": {
-        "owner": "emmanuelrosa",
-        "repo": "erosanix",
-        "type": "github"
-      }
-    },
-    "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1673956053,
-        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1706604790,
-        "narHash": "sha256-V97cleWrkQUt2L7cg2w03ysugxsNYqow+CUAx4KFn1o=",
+        "lastModified": 1727426666,
+        "narHash": "sha256-+dWqE0zvO4ldvVZC19D7Hd4JcQvX9v2txh3p2e4+u2U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3dc28a618283d8ffb3e9faa5dfa704d17dde74dd",
+        "rev": "5e5bcdaf5f3018b34deec4c93c61c5186e4af8b4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "master",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1707400555,
-        "narHash": "sha256-Oh4I95tkuOtwWQOhZr/5Yz+gBawAGQ2XMkEWU9dT+g4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9f7b59b2758aa5913232ef797effe43d3384ca68",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixpkgs",
+        "ref": "nixos-24.05",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "erosanix": "erosanix",
-        "nixpkgs": "nixpkgs_2"
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
       }
     }
   },
