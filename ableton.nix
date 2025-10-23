@@ -19,10 +19,10 @@ in mkWindowsApp rec {
   inherit wine;
 
   pname = "ableton";
-  version = "11.3.21";
+  version = "12.2.6";
 
   src = builtins.fetchurl {  # use builtins for nice download progress
-    url = "https://cdn-downloads.ableton.com/channels/${version}/ableton_live_lite_${version}_64.zip";
+    url = "https://cdn-downloads.ableton.com/channels/${version}/ableton_live_suite_${version}_64.zip";
     sha256 = "1hlfxg67zlcblvfy41yw3m5v518fv1a8v2ghf2wf7xy5iysxp8j7";
   };
 
