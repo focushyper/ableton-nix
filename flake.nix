@@ -1,63 +1,43 @@
 {
-  description = "NixOS configuration flake to install Ableton Live 12 Suite via Wine";
+  description = "Ableton Live 12 Suite on NixOS via Wine";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/9f7b59b2758aa5913232ef797effe43d3384ca68";   # pinned
-    erosanix.url = "github:emmanuelrosa/erosanix/72fc398838446ac66d67639e22c401137aa43d9e";
-    flake-compat.url = "github:edolstra/flake-compat/35bb57c0c8d8b62bbfd284272c928ceb64ddbde9";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, erosanix, flake-compat, ... }:
-    let
-      systems = [ "x86_64-linux" ];
-    in
-    {
-      nixosConfigurations = builtins.listToAttrs (map (system:
-        let
-          pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
-          lib = pkgs.lib;
-        in {
-          name = "nixos-${system}";
-          modules = [
-            ./configuration.nix
-            ({
-              config, pkgs, ... }: {
-                environment.systemPackages = with pkgs; [
-                  wine
-                  winetricks
-                ];
+  outputs = { self, nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
-                nixpkgs.config.allowUnfree = true;
+        wineAbleton = pkgs.callPackage ./ableton-wine.nix { };
 
-                environment.systemPackages = lib.mkForce (
-                  pkgs.callPackage (erosanix.pkgs.mkwindowsapp) {
-                    pname = "ableton-live-12-suite";
-                    version = "12";
-                    src = ./path/to/AbletonLive12SuiteInstaller.zip;
-                    winePrefix = "${config.home.homeDirectory}/.wine/ableton12";
-                    installScript = ''
-                      d="$WINEPREFIX/drive_c/${pname}_install"
-                      mkdir -p "$d"
-                      unzip ${src} -d "$d"
-                      winetricks -q corefonts vcrun2019 gdiplus
-                      wine "$d/Ableton Live 12 Suite Installer.exe"
-                      rm -rf "$d"
-                    '';
-                  }
-                );
+      in {
+        packages.default = wineAbleton;
 
-                services.pipewire.enable = true;
-                services.pipewire.alsa.enable = true;
-                services.pipewire.pulse.enable = true;
-                hardware.pulseaudio.enable = false;
-                sound.enable = true;
-                hardware.jack.enable = true;
-
-                users.users.yourUser.extraGroups = [ "audio" ];
-              }
-            })
+        # optional devShell: good for testing your prefix
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            wineWowPackages.full
+            winetricks
+            unzip
+            p7zip
+            alsa-lib
+            pipewire
+            jack2
+            fontconfig
+            corefonts
           ];
-        }
-      ) systems);
-    };
+
+          shellHook = ''
+            echo ">>> Ableton Wine Shell Ready"
+            echo "Run: winecfg  (then run your ableton-wine app)"
+          '';
+        };
+      }
+    );
 }
